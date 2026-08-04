@@ -1,3 +1,9 @@
+<script setup>
+const mapQuery = "Agro Bonjardim";
+
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=16&output=embed`;
+</script>
+
 <template>
   <div class="container">
     <section class="panel">
@@ -27,6 +33,15 @@
           <button class="button" type="submit">Enviar</button>
         </form>
       </div>
+
+      <iframe
+        class="map"
+        :src="mapSrc"
+        title="Localização da loja"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </section>
   </div>
 </template>
@@ -37,6 +52,15 @@
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+}
+
+.map {
+  width: 100%;
+  height: 24rem;
+  margin-top: 2rem;
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .details {
