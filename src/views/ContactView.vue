@@ -11,10 +11,11 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=
 
       <div class="cols">
         <ul class="details">
-          <li><strong>Morada</strong>&lt;morada&gt;</li>
-          <li><strong>Telefone</strong>&lt;telefone&gt;</li>
-          <li><strong>Email</strong>&lt;email&gt;</li>
-          <li><strong>Horário</strong>&lt;horário&gt;</li>
+          <li><strong>Morada</strong>Rua dos Pinheiros 355, 6100-266 Cernache do Bonjardim, Portugal</li>
+          <li><strong>Telefone</strong>274 808 466</li>
+          <li><strong>Email</strong>agrobonjardim@gmail.com</li>
+          <li><strong>Horário</strong>Segunda a Sexta: 09h00-13h00, 14h30-19h00 
+          Sábados: 09h00-13h00</li>
         </ul>
 
         <form @submit.prevent>

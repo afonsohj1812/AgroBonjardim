@@ -23,7 +23,7 @@ const social = [
       <div class="cols">
         <div>
           <img class="logo" :src="logo" alt="AgroBonjardim" />
-          <p class="muted">&lt;slogan da loja&gt;</p>
+          <p class="muted">Semear para Colher</p>
 
           <ul class="social">
             <li v-for="s in social" :key="s.label">
@@ -50,9 +50,9 @@ const social = [
 
         <div>
           <h3>Contactos</h3>
-          <p>&lt;morada&gt;</p>
-          <p>&lt;telefone&gt;</p>
-          <p>&lt;email&gt;</p>
+          <p>Cernache do Bonjaredim</p>
+          <p>274 808 466</p>
+          <p>agrobonjardim@gmail.com</p>
         </div>
       </div>
 
