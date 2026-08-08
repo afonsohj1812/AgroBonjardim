@@ -1,3 +1,17 @@
+<script setup>
+import { ref } from "vue";
+
+import { categorias } from "@/data/products";
+
+const track = ref(null);
+
+const slide = (direction) =>
+  track.value.scrollBy({
+    left: direction * track.value.clientWidth,
+    behavior: "smooth",
+  });
+</script>
+
 <template>
   <div class="container">
     <!-- Hero: mission over a looping background video. -->
@@ -67,17 +81,32 @@
         <p class="muted">&lt;descrição do catálogo&gt;</p>
       </div>
 
-      <div class="grid">
-        <RouterLink
-          v-for="n in 6"
-          :key="n"
-          class="card category"
-          :to="{ name: 'products' }"
-        >
-          <span class="icon">&lt;ícone&gt;</span>
-          <h3>&lt;categoria de produto {{ n }}&gt;</h3>
-          <p class="muted">&lt;descrição&gt;</p>
-        </RouterLink>
+      <div class="carousel">
+        <button class="arrow" aria-label="Anterior" @click="slide(-1)">
+          ‹
+        </button>
+
+        <ul ref="track" class="track">
+          <li v-for="categoria in categorias" :key="categoria.slug">
+            <RouterLink
+              class="card category"
+              :to="{ name: 'products', hash: `#${categoria.slug}` }"
+            >
+              <img
+                v-if="categoria.icone"
+                class="icon"
+                :src="categoria.icone"
+                alt=""
+              />
+              <span v-else class="icon icon--empty">&lt;ícone&gt;</span>
+
+              <h3>{{ categoria.nome }}</h3>
+              <p class="muted">{{ categoria.descricao }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+
+        <button class="arrow" aria-label="Seguinte" @click="slide(1)">›</button>
       </div>
     </section>
 
@@ -224,8 +253,75 @@
   font-size: 0.9rem;
 }
 
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.track {
+  --per-view: 4;
+  --gap: 1.5rem;
+
+  list-style: none;
+  display: flex;
+  gap: var(--gap);
+  flex: 1;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.track > li {
+  flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+  scroll-snap-align: start;
+  padding-block: 0.5rem;
+}
+
+@media (max-width: 1100px) {
+  .track {
+    --per-view: 3;
+  }
+}
+
+@media (max-width: 800px) {
+  .track {
+    --per-view: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .track {
+    --per-view: 1;
+  }
+}
+
+.arrow {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.arrow:hover {
+  background: var(--orange);
+  color: var(--white);
+}
+
 .category {
   display: block;
+  height: 100%;
   text-align: center;
   text-decoration: none;
   color: inherit;
@@ -238,6 +334,10 @@
   height: 3.5rem;
   margin: 0 auto 1rem;
   border-radius: 50%;
+  object-fit: contain;
+}
+
+.icon--empty {
   background: var(--orange-soft);
   color: var(--muted);
   font-size: 0.7rem;

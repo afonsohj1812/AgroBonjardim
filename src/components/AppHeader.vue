@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import { routes } from "@/router";
+import { categorias } from "@/data/products";
 import logo from "@/assets/logo.png";
 
 const open = ref(false);
@@ -30,13 +31,26 @@ watch(
         </button>
 
         <nav class="nav" :class="{ open }">
-          <RouterLink
+          <div
             v-for="r in centreRoutes"
             :key="r.name"
-            :to="{ name: r.name }"
+            class="item"
+            :class="{ 'item--menu': r.name === 'products' }"
           >
-            {{ r.meta.label }}
-          </RouterLink>
+            <RouterLink :to="{ name: r.name }">
+              {{ r.meta.label }}
+            </RouterLink>
+
+            <ul v-if="r.name === 'products'" class="dropdown">
+              <li v-for="categoria in categorias" :key="categoria.slug">
+                <RouterLink
+                  :to="{ name: 'products', hash: `#${categoria.slug}` }"
+                >
+                  {{ categoria.nome }}
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
         </nav>
 
         <nav class="contact" :class="{ open }">
@@ -84,6 +98,11 @@ watch(
   justify-self: end;
 }
 
+.nav {
+  display: flex;
+  justify-content: center;
+}
+
 .nav a {
   font-weight: bold;
   color: var(--white);
@@ -94,6 +113,54 @@ watch(
 .nav a:hover,
 .nav a.router-link-active {
   color: var(--green-light);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.item--menu > a::after {
+  content: "";
+  display: inline-block;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  border: 0.3rem solid transparent;
+  border-top-color: currentColor;
+  transform: translateY(0.15rem);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: none;
+  min-width: 15rem;
+  padding: 0.5rem;
+  list-style: none;
+  background: var(--green-darker);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.item--menu:hover .dropdown,
+.item--menu:focus-within .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dropdown a:hover {
+  background: var(--green-dark);
 }
 
 .contact a {
@@ -136,6 +203,29 @@ watch(
   .nav.open,
   .contact.open {
     display: flex;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* No hover on touch: the categories just sit inline, indented. */
+  .dropdown {
+    position: static;
+    display: block;
+    transform: none;
+    padding: 0 0 0 1rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .dropdown a {
+    font-weight: normal;
+  }
+
+  .item--menu > a::after {
+    display: none;
   }
 }
 </style>
