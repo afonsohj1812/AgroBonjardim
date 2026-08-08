@@ -1,6 +1,8 @@
 :root {
+  --green-light: rgb(127, 191, 63);
   --green: rgb(31, 111, 0);
   --green-dark: rgb(31, 63, 0);
+  --green-darker: rgb(15, 31, 0);
   --green-soft: rgba(31, 111, 0, 0.1);
   --orange: rgb(247, 143, 31);
   --orange-soft: rgba(247, 143, 31, 0.1);

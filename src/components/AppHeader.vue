@@ -8,6 +8,9 @@ import logo from "@/assets/logo.png";
 const open = ref(false);
 const route = useRoute();
 
+const centreRoutes = routes.filter((r) => r.name !== "contact");
+const contactRoute = routes.find((r) => r.name === "contact");
+
 watch(
   () => route.path,
   () => (open.value = false),
@@ -27,8 +30,18 @@ watch(
         </button>
 
         <nav class="nav" :class="{ open }">
-          <RouterLink v-for="r in routes" :key="r.name" :to="{ name: r.name }">
+          <RouterLink
+            v-for="r in centreRoutes"
+            :key="r.name"
+            :to="{ name: r.name }"
+          >
             {{ r.meta.label }}
+          </RouterLink>
+        </nav>
+
+        <nav class="contact" :class="{ open }">
+          <RouterLink :to="{ name: contactRoute.name }">
+            {{ contactRoute.meta.label }}
           </RouterLink>
         </nav>
       </div>
@@ -39,78 +52,89 @@ watch(
 <style scoped>
 .header {
   position: relative;
-  top: 0;
-  z-index: 10;
-  padding-block: 1rem;
-  background: var(--white);
+  margin-top: 1rem;
 }
 
 .bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 1rem;
   padding: 0.75rem 1.5rem;
-  background: var(--white);
+  background: var(--green-darker);
   border-radius: var(--radius-panel);
-  box-shadow: var(--shadow);
-}
-
-.logo {
-  display: block;
-  line-height: 0;
 }
 
 .logo img {
   height: 5rem;
-  width: auto;
 }
 
 .toggle {
   display: none;
-  font: inherit;
-  padding: 0.4rem 0.9rem;
-  border: 2px solid var(--green);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--orange);
   border-radius: 999px;
-  background: var(--white);
-  color: var(--green);
+  background: transparent;
+  color: var(--orange);
   cursor: pointer;
 }
 
-.nav {
-  display: flex;
-  gap: 0.5rem;
+.contact {
+  justify-self: end;
 }
 
 .nav a {
-  color: var(--text);
-  text-decoration: none;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-}
-
-.nav a:hover {
-  background: var(--green-soft);
-}
-
-.nav a.router-link-active {
-  background: var(--green);
+  font-weight: bold;
   color: var(--white);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.nav a:hover,
+.nav a.router-link-active {
+  color: var(--green-light);
+}
+
+.contact a {
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: var(--orange);
+  color: var(--orange-dark);
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: background 0.1s ease;
+}
+
+.contact a:hover {
+  background: var(--white);
 }
 
 @media (max-width: 720px) {
+  .bar {
+    grid-template-columns: 1fr auto;
+    padding-bottom: 1.5rem;
+    border-radius: 2rem;
+  }
+
   .toggle {
     display: block;
   }
 
-  .nav {
+  .nav,
+  .contact {
     display: none;
+    grid-column: 1 / -1;
     flex-direction: column;
+    justify-self: stretch;
     width: 100%;
   }
 
-  .nav.open {
+  .nav.open,
+  .contact.open {
     display: flex;
   }
 }

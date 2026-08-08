@@ -1,23 +1,36 @@
 <template>
   <div class="container">
-    <!-- Hero: two halves, one per business area. -->
-    <section class="hero">
-      <RouterLink class="panel panel--green half" :to="{ name: 'products' }">
-        <h2>&lt;área de negócio 1&gt;</h2>
-        <p class="muted">&lt;descrição curta&gt;</p>
-      </RouterLink>
+    <!-- Hero: mission over a looping background video. -->
+    <section class="panel hero">
+      <video
+        class="hero_video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/hero-poster.png"
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
 
-      <RouterLink class="panel panel--orange half" :to="{ name: 'products' }">
-        <h2>&lt;área de negócio 2&gt;</h2>
-        <p>&lt;descrição curta&gt;</p>
-      </RouterLink>
-    </section>
+      <div class="hero_content">
+        <ul class="badges">
+          <li v-for="n in 2" :key="n">&lt;área de negócio {{ n }}&gt;</li>
+        </ul>
 
-    <!-- Mission -->
-    <section class="panel">
-      <div class="section-head">
-        <h2>&lt;título da missão&gt;</h2>
-        <p class="muted">&lt;texto da missão&gt;</p>
+        <div class="hero_grid">
+          <h1>&lt;título da missão&gt;</h1>
+
+          <div class="hero_aside">
+            <p>&lt;texto da missão&gt;</p>
+            <RouterLink
+              class="button button--accent"
+              :to="{ name: 'products' }"
+            >
+              Os nossos produtos
+            </RouterLink>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -86,31 +99,75 @@
 
 <style scoped>
 .hero {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-block: 1.5rem;
-}
-
-.half {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 20rem;
-  margin: 0;
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  min-height: min(80vh, 44rem);
+  padding: clamp(2rem, 5vw, 4.5rem);
+  background: var(--green-dark);
+  color: var(--white);
 }
 
-.half:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lift);
+.hero_video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.half p {
-  margin-top: 0.5rem;
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(31, 63, 0, 0.5), rgba(31, 63, 0, 0));
+  z-index: 1;
+}
+
+.hero_content {
+  position: relative;
+  z-index: 2;
+}
+
+.badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.badges li {
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  background: var(--green-dark);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.hero_grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2.5rem;
+  align-items: end;
+}
+
+.hero_grid h1 {
+  font-size: clamp(2rem, 5.5vw, 4rem);
+  font-weight: 800;
+}
+
+.hero_aside p {
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .hero_grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
 }
 
 .about {
