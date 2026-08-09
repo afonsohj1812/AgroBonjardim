@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 
 import { categorias } from "@/data/products";
+import { parceiros } from "@/data/partners";
 
 const track = ref(null);
 
@@ -10,6 +11,23 @@ const slide = (direction) =>
     left: direction * track.value.clientWidth,
     behavior: "smooth",
   });
+
+const step = ref(0);
+const isAnimated = ref(true);
+
+const timer = setInterval(() => {
+  step.value += 1;
+
+  if (step.value === parceiros.length) {
+    setTimeout(() => {
+      isAnimated.value = false;
+      step.value = 0;
+      requestAnimationFrame(() => (isAnimated.value = true));
+    }, 700);
+  }
+}, 2000);
+
+onUnmounted(() => clearInterval(timer));
 </script>
 
 <template>
@@ -29,14 +47,19 @@ const slide = (direction) =>
 
       <div class="hero_content">
         <ul class="badges">
-          <li v-for="n in 2" :key="n">&lt;área de negócio {{ n }}&gt;</li>
+          <li>Agricultura &amp; Pecuária</li>
+          <li>Jardinagem &amp; Ferramentas</li>
         </ul>
 
         <div class="hero_grid">
-          <h1>&lt;título da missão&gt;</h1>
+          <h1>Tudo para o campo, a horta e o jardim</h1>
 
           <div class="hero_aside">
-            <p>&lt;texto da missão&gt;</p>
+            <p>
+              Produtos de qualidade e aconselhamento de quem conhece a região.
+              Ao lado de agricultores, empresas e clientes particulares em
+              Cernache do Bonjardim.
+            </p>
             <RouterLink
               class="button button--accent"
               :to="{ name: 'products' }"
@@ -51,8 +74,14 @@ const slide = (direction) =>
     <!-- About: text left, photos right -->
     <section class="panel about">
       <div>
-        <h2>&lt;título sobre a loja&gt;</h2>
-        <p class="muted">&lt;texto de apresentação&gt;</p>
+        <h2>A SUA LOJA AGRÍCOLA EM CERNACHE DO BONJARDIM</h2>
+        <p class="muted">
+          Na Agro Bonjardim encontra tudo o que precisa para o campo, a horta e
+          o jardim: produtos agrícolas e fitofarmacêuticos, rações, sementes,
+          fertilizantes, ferramentas e muito mais. Apoiamos agricultores,
+          empresas e clientes particulares da região com produtos de qualidade e
+          um atendimento próximo e personalizado.
+        </p>
         <RouterLink class="button" :to="{ name: 'about' }"
           >Saber mais</RouterLink
         >
@@ -66,18 +95,33 @@ const slide = (direction) =>
     <!-- Partners logo strip -->
     <section class="panel">
       <div class="section-head">
-        <h2>&lt;título dos parceiros&gt;</h2>
+        <h2>OS NOSSOS PARCEIROS</h2>
       </div>
 
-      <ul class="strip">
-        <li v-for="n in 5" :key="n">&lt;logótipo {{ n }}&gt;</li>
-      </ul>
+      <!-- The list is rendered twice so the loop can restart unnoticed. -->
+      <div class="marquee">
+        <ul
+          class="strip"
+          :class="{ isAnimated: isAnimated }"
+          :style="{ transform: `translateX(calc(${-step} * var(--step)))` }"
+        >
+          <li
+            v-for="(parceiro, i) in [...parceiros, ...parceiros]"
+            :key="i"
+            :aria-hidden="i >= parceiros.length"
+          >
+            <a :href="parceiro.link" target="_blank" rel="noopener noreferrer">
+              <img :src="parceiro.logo" :alt="parceiro.nome" />
+            </a>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- Product categories -->
     <section class="panel">
       <div class="section-head">
-        <h2>&lt;título dos produtos&gt;</h2>
+        <h2>OS NOSSOS PRODUTOS</h2>
         <p class="muted">&lt;descrição do catálogo&gt;</p>
       </div>
 
@@ -113,7 +157,7 @@ const slide = (direction) =>
     <!-- Key differentiators -->
     <section class="panel panel--green">
       <div class="section-head">
-        <h2>&lt;título dos diferenciadores&gt;</h2>
+        <h2>O QUE NOS FAZ A ESCOLHA CERTA</h2>
       </div>
 
       <div class="features">
@@ -234,23 +278,65 @@ const slide = (direction) =>
   margin-top: 2rem;
 }
 
+.marquee {
+  overflow: hidden;
+  margin-top: 2rem;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4rem,
+    #000 calc(100% - 4rem),
+    transparent
+  );
+}
+
 .strip {
+  --step: 11.5rem;
+
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  display: flex;
   gap: 1.5rem;
   align-items: center;
-  margin-top: 2rem;
+  width: max-content;
+}
+
+.strip.isAnimated {
+  transition: transform 0.7s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip.isAnimated {
+    transition: none;
+  }
 }
 
 .strip li {
   display: grid;
   place-items: center;
+  flex: 0 0 10rem;
   height: 5rem;
   border-radius: var(--radius);
-  background: var(--green-soft);
-  color: var(--muted);
-  font-size: 0.9rem;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.strip a {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem;
+  transition: transform 0.25s ease;
+}
+
+.strip a:hover {
+  transform: scale(1.08);
+}
+
+.strip img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .carousel {
