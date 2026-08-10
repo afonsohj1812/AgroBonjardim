@@ -50,7 +50,7 @@ const social = [
 
         <div>
           <h3>Contactos</h3>
-          <p>Cernache do Bonjaredim</p>
+          <p>Cernache do Bonjardim</p>
           <p>274 808 466</p>
           <p>agrobonjardim@gmail.com</p>
         </div>

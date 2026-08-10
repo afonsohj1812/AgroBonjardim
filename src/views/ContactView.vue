@@ -35,6 +35,7 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=
         </form>
       </div>
 
+      <h3 class="map-title">Onde nos pode encontrar</h3>
       <iframe
         class="map"
         :src="mapSrc"
@@ -55,10 +56,16 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=
   margin-top: 2rem;
 }
 
+.map-title {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--green);
+}
+
 .map {
   width: 100%;
   height: 24rem;
-  margin-top: 2rem;
+  margin-top: 0;
   border: 0;
   border-radius: var(--radius);
   box-shadow: var(--shadow);

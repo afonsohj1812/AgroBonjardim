@@ -161,9 +161,9 @@ onUnmounted(() => clearInterval(timer));
       </div>
 
       <div class="features">
-        <article v-for="n in 4" :key="n">
-          <h3>&lt;vantagem {{ n }}&gt;</h3>
-          <p class="muted">&lt;descrição&gt;</p>
+        <article v-for="v in vantagens" :key="v.titulo">
+          <h3>{{ v.titulo }}</h3>
+          <p class="muted">{{ v.descricao }}</p>
         </article>
       </div>
     </section>
