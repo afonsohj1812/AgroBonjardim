@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import { routes } from "@/router";
@@ -16,67 +16,100 @@ watch(
   () => route.path,
   () => (open.value = false),
 );
+
+const scrolled = ref(false);
+const onScroll = () => (scrolled.value = window.scrollY > 10);
+
+const solid = computed(() => scrolled.value || route.name !== "home");
+
+onMounted(() => window.addEventListener("scroll", onScroll, { passive: true }));
+onUnmounted(() => window.removeEventListener("scroll", onScroll));
 </script>
 
 <template>
   <header class="header">
-    <div class="container">
-      <div class="bar">
-        <RouterLink :to="{ name: 'home' }" class="logo">
-          <img :src="logo" alt="AgroBonjardim" />
-        </RouterLink>
+    <div class="bar" :class="{ solid }">
+      <RouterLink :to="{ name: 'home' }" class="logo">
+        <img :src="logo" alt="AgroBonjardim" />
+      </RouterLink>
 
-        <button class="toggle" :aria-expanded="open" @click="open = !open">
-          Menu
-        </button>
+      <button class="toggle" :aria-expanded="open" @click="open = !open">
+        Menu
+      </button>
 
-        <nav class="nav" :class="{ open }">
-          <div
-            v-for="r in centreRoutes"
-            :key="r.name"
-            class="item"
-            :class="{ 'item--menu': r.name === 'products' }"
-          >
-            <RouterLink :to="{ name: r.name }">
-              {{ r.meta.label }}
-            </RouterLink>
-
-            <ul v-if="r.name === 'products'" class="dropdown">
-              <li v-for="category in categories" :key="category.slug">
-                <RouterLink
-                  :to="{ name: 'products', hash: `#${category.slug}` }"
-                >
-                  {{ category.name }}
-                </RouterLink>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <nav class="contact" :class="{ open }">
-          <RouterLink :to="{ name: contactRoute.name }">
-            {{ contactRoute.meta.label }}
+      <nav class="nav" :class="{ open }">
+        <div
+          v-for="r in centreRoutes"
+          :key="r.name"
+          class="item"
+          :class="{ 'item--menu': r.name === 'products' }"
+        >
+          <RouterLink :to="{ name: r.name }">
+            {{ r.meta.label }}
           </RouterLink>
-        </nav>
-      </div>
+
+          <ul v-if="r.name === 'products'" class="dropdown">
+            <li v-for="category in categories" :key="category.slug">
+              <RouterLink :to="{ name: 'products', hash: `#${category.slug}` }">
+                {{ category.name }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <nav class="contact" :class="{ open }">
+        <RouterLink :to="{ name: contactRoute.name }">
+          {{ contactRoute.meta.label }}
+        </RouterLink>
+      </nav>
     </div>
   </header>
 </template>
 
 <style scoped>
+/* Edge to edge at the very top, and it stays there while the page scrolls. */
 .header {
-  position: relative;
-  margin-top: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .bar {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1.5rem;
-  background: var(--green-darker);
-  border-radius: var(--radius-panel);
+  height: var(--header-height);
+  padding-inline: var(--gutter);
+  background: transparent;
+  transition:
+    background 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 31, 0, 0.85),
+    rgba(15, 31, 0, 0)
+  );
+  transition: opacity 0.3s ease;
+}
+
+.bar.solid::before {
+  opacity: 0;
+}
+
+.bar.solid {
+  background: rgba(15, 31, 0, 0.55);
+  backdrop-filter: blur(12px);
 }
 
 .logo img {
@@ -108,6 +141,7 @@ watch(
   color: var(--white);
   text-decoration: none;
   padding: 0.5rem 1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .nav a:hover,
@@ -173,6 +207,7 @@ watch(
   text-transform: uppercase;
   text-decoration: none;
   letter-spacing: 0.05em;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
   transition: background 0.1s ease;
 }
 
@@ -183,8 +218,8 @@ watch(
 @media (max-width: 720px) {
   .bar {
     grid-template-columns: 1fr auto;
-    padding-bottom: 1.5rem;
-    border-radius: 2rem;
+    height: auto;
+    padding-block: 1rem;
   }
 
   .toggle {

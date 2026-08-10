@@ -202,14 +202,17 @@ onUnmounted(() => clearInterval(timer));
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: min(80vh, 44rem);
+  min-height: 100vh;
+  margin-inline: calc(-1 * var(--gutter));
+  margin-top: calc(-1 * var(--header-height));
   padding: clamp(2rem, 5vw, 4.5rem);
+  padding-top: calc(var(--header-height) + clamp(2rem, 5vw, 4.5rem));
+  border-radius: 0;
+  box-shadow: none;
   background: var(--green-dark);
   color: var(--white);
 }
 
-/* All four are stacked; only the active one is opaque, so switching between
-   them is a crossfade. */
 .hero_video {
   position: absolute;
   inset: 0;

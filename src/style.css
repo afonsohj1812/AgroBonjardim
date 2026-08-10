@@ -14,6 +14,8 @@
   --shadow: 0 6px 24px rgba(31, 111, 0, 0.1);
   --shadow-lift: 0 12px 32px rgba(31, 111, 0, 0.1);
   --container: 100%;
+  --gutter: clamp(1rem, 2vw, 2rem);
+  --header-height: 6.5rem;
 }
 
 * {
@@ -68,7 +70,12 @@ a {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: clamp(1rem, 2vw, 2rem);
+  padding-inline: var(--gutter);
+}
+
+.full-bleed {
+  margin-inline: calc(-1 * var(--gutter));
+  border-radius: 0;
 }
 
 .panel {
