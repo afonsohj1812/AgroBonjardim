@@ -489,8 +489,9 @@ onUnmounted(() => clearInterval(timer));
   z-index: -1;
   background: linear-gradient(
     to top,
-    rgba(15, 31, 0, 0.9) 30%,
-    rgba(15, 31, 0, 0.25)
+    rgba(15, 31, 0, 0.75) 5%,
+    rgba(15, 31, 0, 0.15) 55%,
+    rgba(15, 31, 0, 0)
   );
 }
 

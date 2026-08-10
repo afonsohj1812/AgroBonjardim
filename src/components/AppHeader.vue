@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import { routes } from "@/router";
-import { categories } from "@/data/products";
 import logo from "@/assets/logo.png";
 
 const open = ref(false);
@@ -38,24 +37,9 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
       </button>
 
       <nav class="nav" :class="{ open }">
-        <div
-          v-for="r in centreRoutes"
-          :key="r.name"
-          class="item"
-          :class="{ 'item--menu': r.name === 'products' }"
-        >
-          <RouterLink :to="{ name: r.name }">
-            {{ r.meta.label }}
-          </RouterLink>
-
-          <ul v-if="r.name === 'products'" class="dropdown">
-            <li v-for="category in categories" :key="category.slug">
-              <RouterLink :to="{ name: 'products', hash: `#${category.slug}` }">
-                {{ category.name }}
-              </RouterLink>
-            </li>
-          </ul>
-        </div>
+        <RouterLink v-for="r in centreRoutes" :key="r.name" :to="{ name: r.name }">
+          {{ r.meta.label }}
+        </RouterLink>
       </nav>
 
       <nav class="contact" :class="{ open }">
@@ -148,54 +132,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   color: var(--green-light);
 }
 
-.item {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.item--menu > a::after {
-  content: "";
-  display: inline-block;
-  margin-left: 0.4rem;
-  vertical-align: middle;
-  border: 0.3rem solid transparent;
-  border-top-color: currentColor;
-  transform: translateY(0.15rem);
-}
-
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  display: none;
-  min-width: 15rem;
-  padding: 0.5rem;
-  list-style: none;
-  background: var(--green-darker);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.item--menu:hover .dropdown,
-.item--menu:focus-within .dropdown {
-  display: block;
-}
-
-.dropdown a {
-  display: block;
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.dropdown a:hover {
-  background: var(--green-dark);
-}
-
 .contact a {
   text-align: center;
   padding: 0.75rem 1.5rem;
@@ -237,28 +173,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   .nav.open,
   .contact.open {
     display: flex;
-  }
-
-  .item {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .dropdown {
-    position: static;
-    display: block;
-    transform: none;
-    padding: 0 0 0 1rem;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .dropdown a {
-    font-weight: normal;
-  }
-
-  .item--menu > a::after {
-    display: none;
   }
 }
 </style>

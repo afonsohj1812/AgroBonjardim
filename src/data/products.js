@@ -24,7 +24,7 @@ const images = bySlug(photos, /\.\w+$/);
 const list = [
   {
     slug: "racoes",
-    name: "Rações e complementos para animais",
+    name: "Rações e complementos",
     description: "Alimentação e complementos para todo o tipo de animais.",
   },
   {
@@ -54,13 +54,18 @@ const list = [
   },
   {
     slug: "fitofarmacos",
-    name: "Produtos fitofarmacêuticos e soluções biológicas",
+    name: "Produtos fitofarmacêuticos",
     description: "Proteção das culturas, com alternativas biológicas.",
   },
   {
     slug: "casa-e-bricolage",
     name: "Casa e bricolage",
     description: "Ferramentas e artigos de apoio à casa e ao quintal.",
+  },
+  {
+    slug: "apicultura",
+    name: "Apicultura",
+    description: "Material e equipamento para a criação de abelhas.",
   },
 ];
 

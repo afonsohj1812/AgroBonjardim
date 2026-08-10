@@ -5,16 +5,16 @@ import HomeView from "@/views/HomeView.vue";
 export const routes = [
   { path: "/", name: "home", component: HomeView, meta: { label: "Início" } },
   {
-    path: "/quem-somos",
-    name: "about",
-    component: () => import("@/views/AboutView.vue"),
-    meta: { label: "Quem Somos" },
-  },
-  {
     path: "/produtos",
     name: "products",
     component: () => import("@/views/ProductsView.vue"),
     meta: { label: "Produtos" },
+  },
+  {
+    path: "/quem-somos",
+    name: "about",
+    component: () => import("@/views/AboutView.vue"),
+    meta: { label: "Quem Somos" },
   },
   {
     path: "/parceiros",
