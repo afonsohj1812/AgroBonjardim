@@ -1,9 +1,9 @@
 <script setup>
-import { parceiros } from '@/data/partners'
+import { partners, hero } from "@/data/partners";
 </script>
 
 <template>
-  <div class="container">
+  <div class="container panel">
     <section class="hero">
       <img :src="hero" alt="Parceiros" />
       <h1>Parceiros</h1>
@@ -12,14 +12,18 @@ import { parceiros } from '@/data/partners'
     <section class="panel intro">
       <span class="pill">Parcerias que Fazem a Diferença</span>
       <h2>Os Nossos Parceiros</h2>
-      <p class="muted">Selecionamos cuidadosamente os nossos fornecedores para garantir aos nossos clientes produtos de qualidade, inovação e fiabilidade em todas as áreas da agricultura e jardinagem.</p>
+      <p class="muted">
+        Selecionamos cuidadosamente os nossos fornecedores para garantir aos
+        nossos clientes produtos de qualidade, inovação e fiabilidade em todas
+        as áreas da agricultura e jardinagem.
+      </p>
     </section>
 
     <section class="panel">
       <ul class="logos">
-        <li v-for="(parceiro, i) in parceiros" :key="i">
-          <a :href="parceiro.link" target="_blank" rel="noopener noreferrer">
-            <img :src="parceiro.logo" :alt="parceiro.nome" />
+        <li v-for="(partner, i) in partners" :key="i">
+          <a :href="partner.link" target="_blank" rel="noopener noreferrer">
+            <img :src="partner.logo" :alt="partner.name" />
           </a>
         </li>
       </ul>

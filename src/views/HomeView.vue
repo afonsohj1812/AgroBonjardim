@@ -1,8 +1,28 @@
 <script setup>
 import { onUnmounted, ref } from "vue";
 
-import { categorias } from "@/data/products";
-import { parceiros } from "@/data/partners";
+import { categories } from "@/data/products";
+import { partners } from "@/data/partners";
+
+const advantages = [
+  { title: "<vantagem 1>", description: "<descrição>" },
+  { title: "<vantagem 2>", description: "<descrição>" },
+  { title: "<vantagem 3>", description: "<descrição>" },
+  { title: "<vantagem 4>", description: "<descrição>" },
+];
+
+// Hero videos, played in order and crossfaded into one another.
+const videos = ["/olives.mp4", "/chicken.mp4", "/grapes.mp4", "/hero.mp4"];
+const players = ref([]);
+const current = ref(0);
+
+const next = () => {
+  current.value = (current.value + 1) % videos.length;
+
+  const upcoming = players.value[current.value];
+  upcoming.currentTime = 0;
+  upcoming.play();
+};
 
 const track = ref(null);
 
@@ -13,16 +33,16 @@ const slide = (direction) =>
   });
 
 const step = ref(0);
-const isAnimated = ref(true);
+const animated = ref(true);
 
 const timer = setInterval(() => {
   step.value += 1;
 
-  if (step.value === parceiros.length) {
+  if (step.value === partners.length) {
     setTimeout(() => {
-      isAnimated.value = false;
+      animated.value = false;
       step.value = 0;
-      requestAnimationFrame(() => (isAnimated.value = true));
+      requestAnimationFrame(() => (animated.value = true));
     }, 700);
   }
 }, 2000);
@@ -35,15 +55,19 @@ onUnmounted(() => clearInterval(timer));
     <!-- Hero: mission over a looping background video. -->
     <section class="panel hero">
       <video
+        v-for="(src, i) in videos"
+        :key="src"
+        ref="players"
         class="hero_video"
-        autoplay
-        muted
-        loop
-        playsinline
+        :class="{ active: i === current }"
+        :src="src"
+        :autoplay="i === 0"
+        :preload="i === 0 ? 'auto' : 'metadata'"
         poster="/hero-poster.png"
-      >
-        <source src="/hero.mp4" type="video/mp4" />
-      </video>
+        muted
+        playsinline
+        @ended="next"
+      ></video>
 
       <div class="hero_content">
         <ul class="badges">
@@ -88,7 +112,8 @@ onUnmounted(() => clearInterval(timer));
       </div>
 
       <div class="photos">
-        <div v-for="n in 2" :key="n" class="photo">&lt;imagem {{ n }}&gt;</div>
+        <img class="photo" src="/fora_vertical.jpg" alt="Loja Agro Bonjardim" />
+        <img class="photo" src="/dentro.jpg" alt="Interior da loja" />
       </div>
     </section>
 
@@ -102,16 +127,16 @@ onUnmounted(() => clearInterval(timer));
       <div class="marquee">
         <ul
           class="strip"
-          :class="{ isAnimated: isAnimated }"
+          :class="{ animated }"
           :style="{ transform: `translateX(calc(${-step} * var(--step)))` }"
         >
           <li
-            v-for="(parceiro, i) in [...parceiros, ...parceiros]"
+            v-for="(partner, i) in [...partners, ...partners]"
             :key="i"
-            :aria-hidden="i >= parceiros.length"
+            :aria-hidden="i >= partners.length"
           >
-            <a :href="parceiro.link" target="_blank" rel="noopener noreferrer">
-              <img :src="parceiro.logo" :alt="parceiro.nome" />
+            <a :href="partner.link" target="_blank" rel="noopener noreferrer">
+              <img :src="partner.logo" :alt="partner.name" />
             </a>
           </li>
         </ul>
@@ -131,21 +156,21 @@ onUnmounted(() => clearInterval(timer));
         </button>
 
         <ul ref="track" class="track">
-          <li v-for="categoria in categorias" :key="categoria.slug">
+          <li v-for="category in categories" :key="category.slug">
             <RouterLink
               class="card category"
-              :to="{ name: 'products', hash: `#${categoria.slug}` }"
+              :to="{ name: 'products', hash: `#${category.slug}` }"
             >
               <img
-                v-if="categoria.icone"
+                v-if="category.icon"
                 class="icon"
-                :src="categoria.icone"
+                :src="category.icon"
                 alt=""
               />
               <span v-else class="icon icon--empty">&lt;ícone&gt;</span>
 
-              <h3>{{ categoria.nome }}</h3>
-              <p class="muted">{{ categoria.descricao }}</p>
+              <h3>{{ category.name }}</h3>
+              <p class="muted">{{ category.description }}</p>
             </RouterLink>
           </li>
         </ul>
@@ -161,9 +186,9 @@ onUnmounted(() => clearInterval(timer));
       </div>
 
       <div class="features">
-        <article v-for="v in vantagens" :key="v.titulo">
-          <h3>{{ v.titulo }}</h3>
-          <p class="muted">{{ v.descricao }}</p>
+        <article v-for="advantage in advantages" :key="advantage.title">
+          <h3>{{ advantage.title }}</h3>
+          <p class="muted">{{ advantage.description }}</p>
         </article>
       </div>
     </section>
@@ -183,12 +208,20 @@ onUnmounted(() => clearInterval(timer));
   color: var(--white);
 }
 
+/* All four are stacked; only the active one is opaque, so switching between
+   them is a crossfade. */
 .hero_video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.hero_video.active {
+  opacity: 1;
 }
 
 .hero::after {
@@ -266,12 +299,10 @@ onUnmounted(() => clearInterval(timer));
 }
 
 .photo {
-  display: grid;
-  place-items: center;
+  width: 100%;
   aspect-ratio: 3 / 4;
+  object-fit: cover;
   border-radius: var(--radius);
-  background: var(--green-soft);
-  color: var(--muted);
 }
 
 .photo:last-child {
@@ -300,12 +331,12 @@ onUnmounted(() => clearInterval(timer));
   width: max-content;
 }
 
-.strip.isAnimated {
+.strip.animated {
   transition: transform 0.7s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .strip.isAnimated {
+  .strip.animated {
     transition: none;
   }
 }

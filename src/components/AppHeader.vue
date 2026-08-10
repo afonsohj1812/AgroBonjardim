@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import { routes } from "@/router";
-import { categorias } from "@/data/products";
+import { categories } from "@/data/products";
 import logo from "@/assets/logo.png";
 
 const open = ref(false);
@@ -42,11 +42,11 @@ watch(
             </RouterLink>
 
             <ul v-if="r.name === 'products'" class="dropdown">
-              <li v-for="categoria in categorias" :key="categoria.slug">
+              <li v-for="category in categories" :key="category.slug">
                 <RouterLink
-                  :to="{ name: 'products', hash: `#${categoria.slug}` }"
+                  :to="{ name: 'products', hash: `#${category.slug}` }"
                 >
-                  {{ categoria.nome }}
+                  {{ category.name }}
                 </RouterLink>
               </li>
             </ul>

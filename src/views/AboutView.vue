@@ -1,18 +1,18 @@
 <script setup>
-import fotoLoja from '@/assets/team.png'
+import storePhoto from '@/assets/team.png'
 
-const valores = [
+const values = [
   {
-    titulo: 'Proximidade',
-    descricao: 'Estamos sempre disponíveis para aconselhar os nossos clientes e encontrar a melhor solução para cada necessidade, garantindo um atendimento próximo, personalizado e de confiança.'
+    title: 'Proximidade',
+    description: 'Estamos sempre disponíveis para aconselhar os nossos clientes e encontrar a melhor solução para cada necessidade, garantindo um atendimento próximo, personalizado e de confiança.'
   },
   {
-    titulo: 'Qualidade',
-    descricao: 'Trabalhamos com marcas reconhecidas e fornecedores de confiança, disponibilizando produtos de elevada qualidade para agricultura, jardinagem e pecuária.'
+    title: 'Qualidade',
+    description: 'Trabalhamos com marcas reconhecidas e fornecedores de confiança, disponibilizando produtos de elevada qualidade para agricultura, jardinagem e pecuária.'
   },
   {
-    titulo: 'Experiência',
-    descricao: 'A experiência acumulada e o conhecimento técnico da nossa equipa permitem prestar um serviço profissional, ajudando os clientes a escolher os produtos mais adequados para cada situação.'
+    title: 'Experiência',
+    description: 'A experiência acumulada e o conhecimento técnico da nossa equipa permitem prestar um serviço profissional, ajudando os clientes a escolher os produtos mais adequados para cada situação.'
   }
 ]
 </script>
@@ -21,15 +21,15 @@ const valores = [
   <div class="container">
     <section class="panel">
       <h2>Quem Somos</h2>
-      <div class="quem-somos">
+      <div class="intro">
         <p class="muted">A Agro Bonjardim é uma loja especializada na comercialização de produtos agrícolas, fitofarmacêuticos, rações, sementes, fertilizantes, ferramentas e diversos artigos para agricultura e jardinagem. Localizada em Cernache do Bonjardim, Sertã, procura diariamente oferecer produtos de qualidade e um atendimento próximo e personalizado, apoiando agricultores, empresas e clientes particulares da região.</p>
-        <img :src="fotoLoja" alt="Agro Bonjardim" class="foto-loja" />
+        <img :src="storePhoto" alt="Agro Bonjardim" class="store-photo" />
       </div>
 
       <div class="grid">
-        <article v-for="(valor, i) in valores" :key="i" class="card">
-          <h3>{{ valor.titulo }}</h3>
-          <p class="muted">{{ valor.descricao }}</p>
+        <article v-for="(value, i) in values" :key="i" class="card">
+          <h3>{{ value.title }}</h3>
+          <p class="muted">{{ value.description }}</p>
         </article>
       </div>
     </section>
@@ -37,7 +37,7 @@ const valores = [
 </template>
 
 <style scoped>
-.quem-somos {
+.intro {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
@@ -45,7 +45,7 @@ const valores = [
   margin-bottom: 1.5rem;
 }
 
-.foto-loja {
+.store-photo {
   width: 100%;
   height: auto;
   border-radius: 8px;
@@ -53,7 +53,7 @@ const valores = [
 }
 
 @media (max-width: 720px) {
-  .quem-somos {
+  .intro {
     grid-template-columns: 1fr;
   }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { categorias } from "@/data/products";
+import { categories } from "@/data/products";
 </script>
 
 <template>
@@ -10,16 +10,16 @@ import { categorias } from "@/data/products";
 
       <div class="grid">
         <article
-          v-for="categoria in categorias"
-          :id="categoria.slug"
-          :key="categoria.slug"
+          v-for="category in categories"
+          :id="category.slug"
+          :key="category.slug"
           class="card"
         >
-          <img v-if="categoria.icone" class="icon" :src="categoria.icone" alt="" />
+          <img v-if="category.icon" class="icon" :src="category.icon" alt="" />
           <span v-else class="icon icon--empty">&lt;ícone&gt;</span>
 
-          <h3>{{ categoria.nome }}</h3>
-          <p class="muted">{{ categoria.descricao }}</p>
+          <h3>{{ category.name }}</h3>
+          <p class="muted">{{ category.description }}</p>
         </article>
       </div>
     </section>
