@@ -2,7 +2,6 @@
 import { routes } from "@/router";
 import logo from "@/assets/logo.png";
 
-// Replace `href` with the real profile URLs.
 const social = [
   {
     label: "Facebook",

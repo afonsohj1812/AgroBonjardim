@@ -68,7 +68,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 </template>
 
 <style scoped>
-/* Edge to edge at the very top, and it stays there while the page scrolls. */
 .header {
   position: sticky;
   top: 0;
@@ -245,7 +244,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
     align-items: stretch;
   }
 
-  /* No hover on touch: the categories just sit inline, indented. */
   .dropdown {
     position: static;
     display: block;
