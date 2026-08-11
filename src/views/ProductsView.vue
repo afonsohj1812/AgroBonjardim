@@ -29,50 +29,11 @@ import { categories } from "@/data/products";
 
 <style scoped>
 .category {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   min-height: 18rem;
   padding: 1.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  background: var(--green-dark) center / cover no-repeat;
-  color: var(--white);
-}
-
-.category::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    to top,
-    rgba(15, 31, 0, 0.75) 5%,
-    rgba(15, 31, 0, 0.15) 55%,
-    rgba(15, 31, 0, 0)
-  );
 }
 
 .category h3 {
   font-size: 1.1rem;
-  margin-bottom: 0.35rem;
-}
-
-.category p {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.icon {
-  width: 3rem;
-  height: 3rem;
-  margin-bottom: auto;
-  padding: 0.6rem;
-  border-radius: 50%;
-  background: var(--white);
-  object-fit: contain;
 }
 </style>

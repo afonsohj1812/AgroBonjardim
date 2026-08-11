@@ -3,7 +3,7 @@ import { partners, hero } from "@/data/partners";
 </script>
 
 <template>
-  <div class="container panel">
+  <div class="container">
     <section class="hero">
       <img :src="hero" alt="Parceiros" />
       <h1>Parceiros</h1>
@@ -21,7 +21,7 @@ import { partners, hero } from "@/data/partners";
 
     <section class="panel">
       <ul class="logos">
-        <li v-for="(partner, i) in partners" :key="i">
+        <li v-for="(partner, i) in partners" :key="i" class="logo-tile">
           <a :href="partner.link" target="_blank" rel="noopener noreferrer">
             <img :src="partner.logo" :alt="partner.name" />
           </a>
@@ -92,31 +92,4 @@ import { partners, hero } from "@/data/partners";
   padding: 0;
 }
 
-.logos li {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1 / 1;
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.logos a {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 0.75rem;
-  transition: transform 0.25s ease;
-}
-
-.logos a:hover {
-  transform: scale(1.08);
-}
-
-.logos img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
 </style>

@@ -42,24 +42,24 @@ const slide = (direction) =>
 const step = ref(0);
 const animated = ref(true);
 
-const timer = setInterval(() => {
-  step.value += 1;
+const rewind = () => {
+  if (step.value < partners.length) return;
 
-  if (step.value === partners.length) {
-    setTimeout(() => {
-      animated.value = false;
-      step.value = 0;
-      requestAnimationFrame(() => (animated.value = true));
-    }, 1600);
-  }
-}, 3000);
+  animated.value = false;
+  step.value = 0;
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => (animated.value = true)),
+  );
+};
+
+const timer = setInterval(() => (step.value += 1), 3000);
 
 onUnmounted(() => clearInterval(timer));
 </script>
 
 <template>
   <div class="container">
-    <section class="panel hero">
+    <section class="hero">
       <video
         v-for="(src, i) in videos"
         :key="src"
@@ -69,7 +69,6 @@ onUnmounted(() => clearInterval(timer));
         :src="src"
         :autoplay="i === 0"
         :preload="i === 0 ? 'auto' : 'metadata'"
-        poster="/hero-poster.png"
         muted
         playsinline
         @ended="next"
@@ -117,8 +116,8 @@ onUnmounted(() => clearInterval(timer));
       </div>
 
       <div class="photos">
-        <img class="photo" src="/fora_vertical.jpg" alt="Loja Agro Bonjardim" />
-        <img class="photo" src="/dentro.jpg" alt="Interior da loja" />
+        <img class="photo" src="/outside.jpg" alt="Loja Agro Bonjardim" />
+        <img class="photo" src="/inside.jpg" alt="Interior da loja" />
       </div>
     </section>
 
@@ -132,10 +131,12 @@ onUnmounted(() => clearInterval(timer));
           class="strip"
           :class="{ animated }"
           :style="{ transform: `translateX(calc(${-step} * var(--step)))` }"
+          @transitionend.self="rewind"
         >
           <li
             v-for="(partner, i) in [...partners, ...partners]"
             :key="i"
+            class="logo-tile"
             :aria-hidden="i >= partners.length"
           >
             <a :href="partner.link" target="_blank" rel="noopener noreferrer">
@@ -161,7 +162,9 @@ onUnmounted(() => clearInterval(timer));
             <RouterLink
               class="category"
               :style="
-                category.image ? { backgroundImage: `url(${category.image})` } : null
+                category.image
+                  ? { backgroundImage: `url(${category.image})` }
+                  : null
               "
               :to="{ name: 'products', hash: `#${category.slug}` }"
             >
@@ -209,8 +212,7 @@ onUnmounted(() => clearInterval(timer));
   margin-top: calc(-1 * var(--header-height));
   padding: clamp(2rem, 5vw, 4.5rem);
   padding-top: calc(var(--header-height) + clamp(2rem, 5vw, 4.5rem));
-  border-radius: 0;
-  box-shadow: none;
+  margin-bottom: 1.5rem;
   background: var(--green-dark);
   color: var(--white);
 }
@@ -363,32 +365,7 @@ onUnmounted(() => clearInterval(timer));
 }
 
 .strip li {
-  display: grid;
-  place-items: stretch;
   flex: 0 0 var(--tile);
-  aspect-ratio: 1;
-  border-radius: var(--radius);
-  background: var(--white);
-  box-shadow: var(--shadow);
-}
-
-.strip a {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 0.5rem;
-  transition: transform 0.25s ease;
-}
-
-.strip a:hover {
-  transform: scale(1.08);
-}
-
-.strip img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 }
 
 .carousel {
@@ -455,64 +432,6 @@ onUnmounted(() => clearInterval(timer));
 .arrow:hover {
   background: var(--orange);
   color: var(--white);
-}
-
-.category {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  min-height: 17rem;
-  padding: 1.25rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  background: var(--green-dark) center / cover no-repeat;
-  color: var(--white);
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.category:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lift);
-}
-
-.category::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    to top,
-    rgba(15, 31, 0, 0.75) 5%,
-    rgba(15, 31, 0, 0.15) 55%,
-    rgba(15, 31, 0, 0)
-  );
-}
-
-.category h3 {
-  font-size: 1.05rem;
-  margin-bottom: 0.35rem;
-}
-
-.category p {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.icon {
-  width: 3rem;
-  height: 3rem;
-  margin-bottom: auto;
-  padding: 0.6rem;
-  border-radius: 50%;
-  background: var(--white);
-  object-fit: contain;
 }
 
 .features {

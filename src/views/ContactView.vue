@@ -1,7 +1,5 @@
 <script setup>
-const mapQuery = "Agro Bonjardim";
-
-const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=16&output=embed`;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent("Agro Bonjardim")}&z=16&output=embed`;
 </script>
 
 <template>

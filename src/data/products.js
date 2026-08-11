@@ -10,16 +10,16 @@ const photos = import.meta.glob("@/assets/products/images/*", {
   import: "default",
 });
 
-const bySlug = (entries, strip) =>
+const bySlug = (entries) =>
   Object.fromEntries(
     Object.entries(entries).map(([path, url]) => [
-      path.split("/").pop().replace(strip, ""),
+      path.split("/").pop().replace(/\.\w+$/, ""),
       url,
     ]),
   );
 
-const icons = bySlug(files, ".svg");
-const images = bySlug(photos, /\.\w+$/);
+const icons = bySlug(files);
+const images = bySlug(photos);
 
 const list = [
   {

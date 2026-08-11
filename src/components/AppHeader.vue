@@ -137,7 +137,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   padding: 0.75rem 1.5rem;
   border-radius: 999px;
   background: var(--orange);
-  color: var(--orange-dark);
+  color: var(--green-darker);
   font-weight: bold;
   text-transform: uppercase;
   text-decoration: none;
