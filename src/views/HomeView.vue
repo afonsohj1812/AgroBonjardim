@@ -75,13 +75,8 @@ onUnmounted(() => clearInterval(timer));
       ></video>
 
       <div class="hero_content">
-        <ul class="badges">
-          <li>Agricultura &amp; Pecuária</li>
-          <li>Jardinagem &amp; Ferramentas</li>
-        </ul>
-
         <div class="hero_grid">
-          <h1>Tudo para o campo, a horta e o jardim</h1>
+          <h1>Tudo para a agricultura, a pecuária e o jardim</h1>
 
           <div class="hero_aside">
             <p>
@@ -89,10 +84,7 @@ onUnmounted(() => clearInterval(timer));
               Ao lado de agricultores, empresas e clientes particulares em
               Cernache do Bonjardim.
             </p>
-            <RouterLink
-              class="button button--accent"
-              :to="{ name: 'products' }"
-            >
+            <RouterLink class="button" :to="{ name: 'products' }">
               Os nossos produtos
             </RouterLink>
           </div>
@@ -153,7 +145,11 @@ onUnmounted(() => clearInterval(timer));
       </div>
 
       <div class="carousel">
-        <button class="arrow" aria-label="Anterior" @click="slide(-1)">
+        <button
+          class="button button--round"
+          aria-label="Anterior"
+          @click="slide(-1)"
+        >
           ‹
         </button>
 
@@ -181,7 +177,13 @@ onUnmounted(() => clearInterval(timer));
           </li>
         </ul>
 
-        <button class="arrow" aria-label="Seguinte" @click="slide(1)">›</button>
+        <button
+          class="button button--round"
+          aria-label="Seguinte"
+          @click="slide(1)"
+        >
+          ›
+        </button>
       </div>
     </section>
 
@@ -268,6 +270,7 @@ onUnmounted(() => clearInterval(timer));
 }
 
 .hero_grid h1 {
+  text-wrap: balance;
   font-size: clamp(2rem, 5.5vw, 4rem);
   font-weight: 800;
 }
@@ -414,24 +417,6 @@ onUnmounted(() => clearInterval(timer));
   .track {
     --per-view: 1;
   }
-}
-
-.arrow {
-  flex: none;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: none;
-  border-radius: 50%;
-  background: var(--green-soft);
-  color: var(--green);
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.arrow:hover {
-  background: var(--orange);
-  color: var(--white);
 }
 
 .features {

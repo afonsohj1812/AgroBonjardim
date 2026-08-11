@@ -4,6 +4,7 @@
   --green-dark: rgb(31, 63, 0);
   --green-darker: rgb(15, 31, 0);
   --green-soft: rgba(31, 111, 0, 0.1);
+  --orange-light: rgb(255, 159, 31);
   --orange: rgb(247, 143, 31);
   --orange-soft: rgba(247, 143, 31, 0.1);
   --white: #ffffff;
@@ -43,6 +44,12 @@ body {
 
 main {
   flex: 1;
+}
+
+@media (max-width: 720px) {
+  main {
+    padding-top: var(--header-height);
+  }
 }
 
 h1,
@@ -136,30 +143,51 @@ a {
 
 .button {
   display: inline-block;
-  padding: 0.7rem 1.6rem;
-  border: 2px solid var(--green);
+  padding: 0.75rem 1.5rem;
+  border: none;
   border-radius: 1000px;
-  background: var(--green);
-  color: var(--white);
   font: inherit;
-  font-weight: 600;
+  background: var(--orange);
+  color: var(--white);
+  font-weight: bold;
   text-decoration: none;
   cursor: pointer;
   box-shadow: var(--shadow);
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .button:hover {
   transform: translateY(-2px);
+  background: var(--orange-light);
   box-shadow: var(--shadow-lift);
 }
 
-.button--accent {
+.button--upper {
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.button--round {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 1.5rem;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.button--round:hover {
   background: var(--orange);
-  border-color: var(--orange);
-  color: var(--text);
+  color: var(--white);
 }
 
 .category {

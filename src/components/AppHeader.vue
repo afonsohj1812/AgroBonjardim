@@ -26,33 +26,53 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ open }">
     <div class="bar" :class="{ solid }">
       <RouterLink :to="{ name: 'home' }" class="logo">
         <img :src="logo" alt="AgroBonjardim" />
       </RouterLink>
 
-      <button class="toggle" :aria-expanded="open" @click="open = !open">
-        Menu
+      <button
+        class="toggle"
+        :class="{ open }"
+        :aria-expanded="open"
+        aria-label="Menu"
+        @click="open = !open"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
 
-      <nav class="nav" :class="{ open }">
-        <RouterLink v-for="r in centreRoutes" :key="r.name" :to="{ name: r.name }">
-          {{ r.meta.label }}
-        </RouterLink>
-      </nav>
+      <div class="menu" :class="{ open }">
+        <nav class="nav">
+          <RouterLink
+            v-for="r in centreRoutes"
+            :key="r.name"
+            :to="{ name: r.name }"
+          >
+            {{ r.meta.label }}
+          </RouterLink>
+        </nav>
 
-      <nav class="contact" :class="{ open }">
-        <RouterLink :to="{ name: contactRoute.name }">
-          {{ contactRoute.meta.label }}
-        </RouterLink>
-      </nav>
+        <nav class="contact">
+          <RouterLink
+            class="button button--upper"
+            :to="{ name: contactRoute.name }"
+          >
+            {{ contactRoute.meta.label }}
+          </RouterLink>
+        </nav>
+      </div>
     </div>
   </header>
 </template>
 
 <style scoped>
 .header {
+  --bar-bg: rgba(15, 31, 0, 0.55);
+  --bar-blur: blur(12px);
+
   position: sticky;
   top: 0;
   z-index: 50;
@@ -69,8 +89,8 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   padding-inline: var(--gutter);
   background: transparent;
   transition:
-    background 0.3s ease,
-    backdrop-filter 0.3s ease;
+    background 0.25s ease,
+    backdrop-filter 0.25s ease;
 }
 
 .bar::before {
@@ -80,10 +100,10 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   z-index: -1;
   background: linear-gradient(
     to bottom,
-    rgba(15, 31, 0, 0.85),
+    rgba(15, 31, 0, 0.75),
     rgba(15, 31, 0, 0)
   );
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .bar.solid::before {
@@ -91,23 +111,52 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 }
 
 .bar.solid {
-  background: rgba(15, 31, 0, 0.55);
-  backdrop-filter: blur(12px);
+  background: var(--bar-bg);
+  backdrop-filter: var(--bar-blur);
 }
 
 .logo img {
-  height: 5rem;
+  height: 6rem;
+}
+
+.menu {
+  display: contents;
 }
 
 .toggle {
   display: none;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border: 2px solid var(--orange);
-  border-radius: 999px;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.6rem;
+  border: none;
   background: transparent;
-  color: var(--orange);
   cursor: pointer;
+}
+
+.toggle span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--orange);
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.toggle span + span {
+  margin-top: 5px;
+}
+
+.toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .contact {
@@ -134,45 +183,45 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 
 .contact a {
   text-align: center;
-  padding: 0.75rem 1.5rem;
-  border-radius: 999px;
-  background: var(--orange);
-  color: var(--green-darker);
-  font-weight: bold;
-  text-transform: uppercase;
-  text-decoration: none;
-  letter-spacing: 0.05em;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  transition: background 0.1s ease;
-}
-
-.contact a:hover {
-  background: var(--white);
 }
 
 @media (max-width: 720px) {
+  .header {
+    position: fixed;
+    left: 0;
+    right: 0;
+  }
+
   .bar {
     grid-template-columns: 1fr auto;
     height: auto;
-    padding-block: 1rem;
+    min-height: var(--header-height);
+    padding-block: 0.75rem;
   }
 
   .toggle {
     display: block;
   }
 
-  .nav,
-  .contact {
+  .menu {
     display: none;
     grid-column: 1 / -1;
     flex-direction: column;
-    justify-self: stretch;
-    width: 100%;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
   }
 
-  .nav.open,
-  .contact.open {
+  .menu.open {
     display: flex;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact {
+    justify-self: stretch;
   }
 }
 </style>
