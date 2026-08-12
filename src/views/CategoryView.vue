@@ -32,8 +32,8 @@ const others = computed(() =>
       </div>
     </section>
 
-    <section class="showcase">
-      <div v-if="category.groups.length" class="groups">
+    <section v-if="category.groups.length" class="showcase">
+      <div class="groups">
         <article
           v-for="(group, i) in category.groups"
           :key="group.title"
@@ -140,14 +140,15 @@ h1 {
 }
 
 .showcase {
-  padding-bottom: clamp(1rem, 3vw, 2rem);
+  margin-inline: calc(-1 * var(--gutter));
+  padding: clamp(2rem, 4vw, 3.5rem) var(--gutter);
+  background: var(--green-light);
 }
 
 .groups {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 .group {
@@ -167,10 +168,10 @@ h1 {
 }
 
 .group--light {
-  --icon: var(--green);
+  --icon: var(--green-dark);
 
-  background: var(--green-soft);
-  color: var(--green-dark);
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--green-darker);
 }
 
 .group h2 {
