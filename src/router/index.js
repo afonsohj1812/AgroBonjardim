@@ -30,9 +30,15 @@ export const routes = [
   },
 ];
 
+const categoryRoute = {
+  path: "/produtos/:slug",
+  name: "category",
+  component: () => import("@/views/CategoryView.vue"),
+};
+
 export default createRouter({
   history: createWebHistory(),
-  routes,
+  routes: [...routes, categoryRoute],
   scrollBehavior: (to) =>
     to.hash ? { el: to.hash, behavior: "smooth" } : { top: 0 },
 });

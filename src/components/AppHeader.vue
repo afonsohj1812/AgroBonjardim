@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import { routes } from "@/router";
+import { categories } from "@/data/products";
 import logo from "@/assets/logo.png";
 
 const open = ref(false);
@@ -46,13 +47,22 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 
       <div class="menu" :class="{ open }">
         <nav class="nav">
-          <RouterLink
+          <div
             v-for="r in centreRoutes"
             :key="r.name"
-            :to="{ name: r.name }"
+            class="item"
+            :class="{ 'item--menu': r.name === 'products' }"
           >
-            {{ r.meta.label }}
-          </RouterLink>
+            <RouterLink :to="{ name: r.name }">{{ r.meta.label }}</RouterLink>
+
+            <ul v-if="r.name === 'products'" class="dropdown">
+              <li v-for="c in categories" :key="c.slug">
+                <RouterLink :to="{ name: 'category', params: { slug: c.slug } }">
+                  {{ c.name }}
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
         </nav>
 
         <nav class="contact">
@@ -181,6 +191,55 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   color: var(--green-light);
 }
 
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.item--menu > a::after {
+  content: "";
+  display: inline-block;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  border: 0.3rem solid transparent;
+  border-top-color: currentColor;
+  transform: translateY(0.15rem);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: none;
+  min-width: 16rem;
+  padding: 0.5rem;
+  list-style: none;
+  background: var(--green-darker);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.item--menu:hover .dropdown,
+.item--menu:focus-within .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  white-space: nowrap;
+  text-shadow: none;
+}
+
+.dropdown a:hover {
+  background: var(--green-dark);
+}
+
 .contact a {
   text-align: center;
 }
@@ -218,6 +277,28 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   .nav {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item--menu > a::after {
+    display: none;
+  }
+
+  .dropdown {
+    position: static;
+    display: block;
+    transform: none;
+    padding: 0 0 0 1rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .dropdown a {
+    font-weight: normal;
   }
 
   .contact {

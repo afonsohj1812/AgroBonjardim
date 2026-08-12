@@ -8,20 +8,20 @@ import { categories } from "@/data/products";
       <h2>Produtos</h2>
 
       <div class="grid">
-        <article
+        <RouterLink
           v-for="category in categories"
-          :id="category.slug"
           :key="category.slug"
           class="category"
           :style="
             category.image ? { backgroundImage: `url(${category.image})` } : null
           "
+          :to="{ name: 'category', params: { slug: category.slug } }"
         >
           <img v-if="category.icon" class="icon" :src="category.icon" alt="" />
 
           <h3>{{ category.name }}</h3>
           <p>{{ category.description }}</p>
-        </article>
+        </RouterLink>
       </div>
     </section>
   </div>

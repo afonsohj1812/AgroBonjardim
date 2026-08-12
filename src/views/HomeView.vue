@@ -115,7 +115,9 @@ onUnmounted(() => clearInterval(timer));
 
     <section class="panel">
       <div class="section-head">
-        <h2>OS NOSSOS PARCEIROS</h2>
+        <h2>
+          <RouterLink :to="{ name: 'partners' }">OS NOSSOS PARCEIROS</RouterLink>
+        </h2>
       </div>
 
       <div class="marquee">
@@ -141,7 +143,9 @@ onUnmounted(() => clearInterval(timer));
 
     <section class="panel">
       <div class="section-head">
-        <h2>OS NOSSOS PRODUTOS</h2>
+        <h2>
+          <RouterLink :to="{ name: 'products' }">OS NOSSOS PRODUTOS</RouterLink>
+        </h2>
       </div>
 
       <div class="carousel">
@@ -162,7 +166,7 @@ onUnmounted(() => clearInterval(timer));
                   ? { backgroundImage: `url(${category.image})` }
                   : null
               "
-              :to="{ name: 'products', hash: `#${category.slug}` }"
+              :to="{ name: 'category', params: { slug: category.slug } }"
             >
               <img
                 v-if="category.icon"
