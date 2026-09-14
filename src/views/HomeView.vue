@@ -5,10 +5,10 @@ import { categories } from "@/data/products";
 import { partners } from "@/data/partners";
 
 const advantages = [
-  { title: "<vantagem 1>", description: "<descrição>" },
-  { title: "<vantagem 2>", description: "<descrição>" },
-  { title: "<vantagem 3>", description: "<descrição>" },
-  { title: "<vantagem 4>", description: "<descrição>" },
+  { title: "Aconselhamento técnico", description: "Ajudamos a escolher o produto certo para cada cultura." },
+  { title: "Atendimento próximo", description: "Conhecemos os clientes e tratamos cada pedido de forma personalizada." },
+  { title: "Tudo num só sítio", description: "Da horta à pecuária, do jardim à casa." },
+  { title: "Zona fitofarmacêutica própria", description: "Produtos regulados numa área separada, com segurança e rigor." },
 ];
 
 const videos = Object.entries(
