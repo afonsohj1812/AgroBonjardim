@@ -4,12 +4,22 @@ import { onUnmounted, ref } from "vue";
 import { categories } from "@/data/products";
 import { partners } from "@/data/partners";
 
+const marks = Object.fromEntries(
+  Object.entries(
+    import.meta.glob("@/assets/features/*.svg", {
+      eager: true,
+      query: "?url",
+      import: "default",
+    }),
+  ).map(([path, url]) => [path.split("/").pop().replace(".svg", ""), url]),
+);
+
 const advantages = [
-  { title: "Aconselhamento técnico", description: "Ajudamos a escolher o produto certo para cada cultura." },
-  { title: "Atendimento próximo", description: "Conhecemos os clientes e tratamos cada pedido de forma personalizada." },
-  { title: "Tudo num só sítio", description: "Da horta à pecuária, do jardim à casa." },
-  { title: "Zona fitofarmacêutica própria", description: "Produtos regulados numa área separada, com segurança e rigor." },
-];
+  { icon: "aconselhamento-tecnico", title: "Aconselhamento técnico", description: "Ajudamos a escolher o produto certo para cada cultura." },
+  { icon: "atendimento-proximo", title: "Atendimento próximo", description: "Conhecemos os clientes e tratamos cada pedido de forma personalizada." },
+  { icon: "tudo-num-so-sitio", title: "Tudo num só sítio", description: "Da horta à pecuária, do jardim à casa." },
+  { icon: "zona-fitofarmaceutica-propria", title: "Zona fitofarmacêutica própria", description: "Produtos regulados numa área separada, com segurança e rigor." },
+].map((advantage) => ({ ...advantage, image: marks[advantage.icon] ?? null }));
 
 const videos = Object.entries(
   import.meta.glob("@/assets/hero/*.mp4", {
@@ -192,12 +202,36 @@ onUnmounted(() => clearInterval(timer));
     </section>
 
     <section class="panel panel--green">
-      <div class="section-head">
-        <h2>O QUE NOS FAZ A ESCOLHA CERTA</h2>
+      <div class="section-head features_head">
+        <h2>
+          O QUE NOS FAZ A ESCOLHA
+          <span class="nowrap">
+            CERTA
+            <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+              <circle cx="12" cy="12" r="9.5" />
+              <path d="M7.5 12.5l3 3 6-6.5" />
+            </svg>
+          </span>
+        </h2>
       </div>
 
       <div class="features">
         <article v-for="advantage in advantages" :key="advantage.title">
+          <img
+            v-if="advantage.image"
+            class="feature_icon"
+            :src="advantage.image"
+            alt=""
+          />
+
           <h3>{{ advantage.title }}</h3>
           <p class="muted">{{ advantage.description }}</p>
         </article>
@@ -429,6 +463,29 @@ onUnmounted(() => clearInterval(timer));
   gap: 2rem;
   margin-top: 2rem;
   text-align: center;
+}
+
+.features_head .nowrap {
+  white-space: nowrap;
+}
+
+.features_head svg {
+  display: inline-block;
+  vertical-align: -0.2em;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-left: 0.15rem;
+  color: var(--white);
+}
+
+.feature_icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 1rem;
+  padding: 0.7rem;
+  border-radius: 50%;
+  background: var(--white);
+  object-fit: contain;
 }
 
 .features h3 {
