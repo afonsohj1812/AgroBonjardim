@@ -126,7 +126,9 @@ onUnmounted(() => clearInterval(timer));
     <section class="panel">
       <div class="section-head">
         <h2>
-          <RouterLink :to="{ name: 'partners' }">OS NOSSOS PARCEIROS</RouterLink>
+          <RouterLink :to="{ name: 'partners' }">
+            As Marcas que Temos em Loja
+          </RouterLink>
         </h2>
       </div>
 

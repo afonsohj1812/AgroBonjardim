@@ -5,13 +5,12 @@ import { partners, hero } from "@/data/partners";
 <template>
   <div class="container">
     <section class="hero">
-      <img :src="hero" alt="Parceiros" />
-      <h1>Parceiros</h1>
+      <img :src="hero" alt="Marcas" />
+      <h1>Marcas</h1>
     </section>
 
     <section class="panel intro">
-      <span class="pill">Parcerias que Fazem a Diferença</span>
-      <h2>Os Nossos Parceiros</h2>
+      <h2>Com Quem Trabalhamos</h2>
       <p class="muted">
         Selecionamos cuidadosamente os nossos fornecedores para garantir aos
         nossos clientes produtos de qualidade, inovação e fiabilidade em todas
@@ -62,19 +61,7 @@ import { partners, hero } from "@/data/partners";
   margin-bottom: 2rem;
 }
 
-.pill {
-  display: inline-block;
-  padding: 0.4rem 1.1rem;
-  border: 1px solid var(--green-dark, #1f3d20);
-  border-radius: 999px;
-  font-size: 0.9rem;
-  color: var(--green-dark, #1f3d20);
-  margin-bottom: 1rem;
-}
-
 .intro h2 {
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
   margin: 0 0 0.75rem;
 }
 

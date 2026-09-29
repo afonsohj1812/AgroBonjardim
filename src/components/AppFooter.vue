@@ -115,7 +115,7 @@ const call = () => (window.location.href = "tel:274808466");
       </div>
 
       <div class="bottom">
-        <p>© {{ new Date().getFullYear() }} AgroBonjardim</p>
+        <p>© {{ new Date().getFullYear() }} Agro Bonjardim - Afonso Lemos & Ricardo Miguel</p>
         <button class="top" @click="scrollTop">Voltar ao topo ↑</button>
       </div>
     </div>

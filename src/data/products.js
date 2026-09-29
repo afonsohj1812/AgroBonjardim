@@ -41,6 +41,18 @@ const photoOf = (slug, name) => {
   return entry ? entry[1] : null;
 };
 
+const marks = bySlug(
+  import.meta.glob("@/assets/icons/*.svg", {
+    eager: true,
+    query: "?url",
+    import: "default",
+  }),
+);
+
+// Troca o nome do ícone pelo ficheiro correspondente em assets/icons.
+const drawn = (entry) =>
+  entry && { ...entry, icon: marks[entry.icon] ?? null };
+
 const icons = bySlug(files);
 const images = bySlug(photos);
 const covers = bySlug(banners);
@@ -54,6 +66,7 @@ const list = [
       {
         title: "Rações Zêzere",
         text: "Somos revendedores das Rações Zêzere, produzidas aqui na Zona Centro, perto de nós. Temos rações para as principais espécies, adaptadas a cada fase de crescimento.",
+        photo: "zezere",
         items: [
           "Marca portuguesa de confiança",
           "Rações para cada fase do animal",
@@ -65,25 +78,25 @@ const list = [
         columns: 2,
         items: [
           "Aves",
+          "Coelhos",
           "Suínos",
           "Ovinos",
           "Caprinos",
           "Cavalos",
-          "Coelhos",
+          "Bovinos",
           "Cereais",
         ],
       },
     ],
-    related: ["pecuaria"],
   },
   {
     slug: "pecuaria",
     name: "Pecuária",
     description: "Equipamento e cuidados para a sua exploração.",
-    lead: "Material de maneio, higiene e saúde animal para bovinos, ovinos, caprinos, suínos e aves, para quem tem uma exploração ou meia dúzia de cabeças em casa.",
+    lead: "Equipamento, higiene e saúde animal para ovinos, caprinos, suínos, bovinose aves, para quem tem uma exploração ou meia dúzia de cabeças em casa.",
     topics: [
       {
-        icon: "🚰",
+        icon: "torneira",
         title: "Bebedouros e comedouros",
         items: [
           "Bebedouros automáticos",
@@ -93,7 +106,7 @@ const list = [
         ],
       },
       {
-        icon: "🚧",
+        icon: "vedacao",
         title: "Vedações e cercas",
         items: [
           "Rede ovelheira",
@@ -103,7 +116,7 @@ const list = [
         ],
       },
       {
-        icon: "🩺",
+        icon: "saude",
         title: "Saúde animal",
         items: [
           "Desparasitantes",
@@ -112,7 +125,7 @@ const list = [
         ],
       },
       {
-        icon: "🐄",
+        icon: "gado",
         title: "Maneio e identificação",
         items: [
           "Brincos e aplicadores",
@@ -122,7 +135,7 @@ const list = [
         ],
       },
       {
-        icon: "🧼",
+        icon: "higiene",
         title: "Higiene e instalações",
         items: [
           "Desinfetantes",
@@ -132,7 +145,7 @@ const list = [
         ],
       },
       {
-        icon: "🐣",
+        icon: "aves",
         title: "Avicultura",
         items: [
           "Bebedouros e comedouros de aves",
@@ -142,11 +155,6 @@ const list = [
         ],
       },
     ],
-    note: {
-      icon: "🐑",
-      text: "Tem dúvidas sobre o maneio do seu rebanho? Fale connosco, ajudamos a escolher o que precisa.",
-    },
-    related: ["racoes"],
     groups: [],
   },
   {
@@ -156,31 +164,26 @@ const list = [
     lead: "Alimentação, acessórios e cuidados de saúde para cães, gatos, aves e outros animais de estimação. Na loja ajudamos a escolher o mais indicado para o seu companheiro.",
     topics: [
       {
-        icon: "🍖",
+        icon: "racao",
         title: "Alimentação",
-        items: ["Rações para cães", "Rações para gatos", "Misturas para aves"],
+        items: ["Rações para cães", "Rações para gatos", "Misturas para aves e roedores"],
       },
       {
-        icon: "🦮",
+        icon: "coleira",
         title: "Passeio e transporte",
         items: ["Coleiras", "Trelas", "Caixas transportadoras"],
       },
       {
-        icon: "🏠",
+        icon: "casota",
         title: "Casa e conforto",
         items: ["Gaiolas", "Ninhos", "Comedouros e bebedouros"],
       },
       {
-        icon: "💊",
+        icon: "comprimido",
         title: "Saúde e cuidados",
         items: ["Desparasitantes", "Suplementos"],
       },
     ],
-    cta: {
-      icon: "🐾",
-      text: "Não sabe o que escolher? Venha à loja, ajudamos a encontrar a alimentação e os cuidados certos para o seu animal.",
-      label: "Fale connosco",
-    },
     groups: [],
   },
   {
@@ -190,7 +193,7 @@ const list = [
     lead: "Do amanho do solo à rega e à colheita, temos o material para a exploração agrícola, a horta e o jardim de casa.",
     topics: [
       {
-        icon: "💧",
+        icon: "rega",
         title: "Rega",
         items: [
           "Tubos e mangueiras",
@@ -200,7 +203,7 @@ const list = [
         ],
       },
       {
-        icon: "🔨",
+        icon: "forquilha",
         title: "Ferramentas agrícolas",
         items: [
           "Enxadas e sachos",
@@ -210,7 +213,7 @@ const list = [
         ],
       },
       {
-        icon: "✂️",
+        icon: "tesoura",
         title: "Jardinagem",
         items: [
           "Tesouras de poda",
@@ -220,7 +223,7 @@ const list = [
         ],
       },
       {
-        icon: "🌫️",
+        icon: "pulverizador",
         title: "Pulverização",
         items: [
           "Pulverizadores de mochila",
@@ -230,17 +233,17 @@ const list = [
         ],
       },
       {
-        icon: "🧱",
+        icon: "cobertura",
         title: "Plásticos e coberturas",
         items: [
-          "Plástico de solo",
-          "Manga de silagem",
-          "Manga térmica",
+          "Plástico de estufa",
+          "Mangas plásticas",
+          "Manta térmica",
           "Tela de solo",
         ],
       },
       {
-        icon: "🕸️",
+        icon: "rede",
         title: "Redes e amarrações",
         items: [
           "Rede de vedação e capoeira",
@@ -251,8 +254,11 @@ const list = [
       },
     ],
     note: {
-      icon: "🛠️",
-      text: "Não encontra o que procura? Temos muito mais em loja e podemos encomendar.",
+      icon: "loja",
+      lines: [
+        "Não encontra o que procura?",
+        "Temos muito mais em loja e podemos encomendar.",
+      ],
     },
     groups: [],
   },
@@ -265,17 +271,17 @@ const list = [
       text: "Temos adubos, corretivos e substratos para a horta, o pomar, o jardim e as grandes culturas. Trabalhamos com marcas de confiança e ajudamos a escolher o produto e a dose mais adequados ao seu solo.",
       boxes: [
         {
-          icon: "🧪",
+          icon: "adubo",
           title: "Adubos",
           items: ["Adubos sólidos", "Adubos líquidos", "Adubos solúveis"],
         },
         {
-          icon: "🪨",
+          icon: "corretivos",
           title: "Corretivos e orgânicos",
           items: ["Corretivos de solo", "Matéria orgânica", "Biofertilizantes"],
         },
         {
-          icon: "🪴",
+          icon: "substrato",
           title: "Substratos",
           items: ["Substratos para sementeira", "Substratos para vasos"],
         },
@@ -298,7 +304,7 @@ const list = [
     lead: "Plantas, árvores e sementes de qualidade para agricultura, horticultura e jardinagem, escolhidas para boas colheitas e plantas fortes.",
     topics: [
       {
-        icon: "🌱",
+        icon: "rebento",
         title: "Plantas",
         photo: "PlantasLoja",
         items: [
@@ -309,7 +315,7 @@ const list = [
         ],
       },
       {
-        icon: "🌳",
+        icon: "arvore",
         title: "Árvores",
         photo: "ArvoresLoja",
         items: [
@@ -319,9 +325,9 @@ const list = [
         ],
       },
       {
-        icon: "🌾",
+        icon: "sementes",
         title: "Sementes",
-        photo: "sementes",
+        photo: "sementesLoja",
         items: [
           "Milho",
           "Forrageiras",
@@ -333,8 +339,11 @@ const list = [
       },
     ],
     note: {
-      icon: "🗓️",
-      text: "Plantas da época disponíveis em loja. Pergunte-nos o que está bom para plantar agora.",
+      icon: "calendario",
+      lines: [
+        "Plantas da época disponíveis em loja.",
+        "Pergunte-nos o que está bom para plantar agora.",
+      ],
     },
     groups: [],
   },
@@ -348,17 +357,17 @@ const list = [
       text: "Vendemos apenas produtos fitofarmacêuticos homologados, para agricultores profissionais e particulares. Ajudamos a escolher o produto certo para cada cultura e explicamos como aplicá-lo corretamente.",
     },
     tiles: [
-      { icon: "🌿", name: "Herbicidas", text: "Controlo de infestantes" },
-      { icon: "🍄", name: "Fungicidas", text: "Prevenção de doenças" },
-      { icon: "🐛", name: "Inseticidas", text: "Combate a pragas" },
-      { icon: "🕷️", name: "Acaricidas", text: "Controlo de ácaros" },
-      { icon: "🐌", name: "Moluscicidas", text: "Lesmas e caracóis" },
-      { icon: "🌱", name: "Bioestimulantes", text: "Crescimento e vigor" },
+      { icon: "herbicidas", name: "Herbicidas", text: "Controlo de infestantes" },
+      { icon: "fungicidas", name: "Fungicidas", text: "Prevenção de doenças" },
+      { icon: "inseticidas", name: "Inseticidas", text: "Combate a pragas" },
+      { icon: "acaricidas", name: "Acaricidas", text: "Controlo de ácaros" },
+      { icon: "moluscicidas", name: "Moluscicidas", text: "Lesmas e caracóis" },
+      { icon: "rebento", name: "Bioestimulantes", text: "Crescimento e vigor" },
     ],
     highlights: [
-      { icon: "✅", text: "Produtos homologados" },
-      { icon: "💬", text: "Aconselhamento técnico" },
-      { icon: "🏬", text: "Zona própria na loja" },
+      { icon: "homologado", text: "Produtos homologados" },
+      { icon: "conselho", text: "Aconselhamento técnico" },
+      { icon: "loja", text: "Zona própria na loja" },
     ],
     groups: [],
   },
@@ -369,7 +378,7 @@ const list = [
     lead: "Ferragens, tintas, produtos de limpeza e material de bricolage para reparações e melhorias em casa, sem ter de ir longe.",
     topics: [
       {
-        icon: "🔧",
+        icon: "chave",
         title: "Ferramentas",
         items: [
           "Ferramentas manuais",
@@ -379,7 +388,7 @@ const list = [
         ],
       },
       {
-        icon: "🔩",
+        icon: "parafuso",
         title: "Ferragens",
         items: [
           "Parafusos e buchas",
@@ -389,7 +398,7 @@ const list = [
         ],
       },
       {
-        icon: "🎨",
+        icon: "rolo",
         title: "Tintas e acabamentos",
         items: [
           "Tintas e vernizes",
@@ -399,7 +408,7 @@ const list = [
         ],
       },
       {
-        icon: "🧹",
+        icon: "vassoura",
         title: "Limpeza e doméstico",
         items: [
           "Detergentes e lixívias",
@@ -410,7 +419,7 @@ const list = [
         ],
       },
       {
-        icon: "💡",
+        icon: "lampada",
         title: "Elétrico e canalização",
         items: [
           "Lâmpadas e extensões",
@@ -422,8 +431,11 @@ const list = [
       },
     ],
     note: {
-      icon: "🏡",
-      text: "Falta-lhe alguma coisa para acabar o trabalho? Passe pela loja, é bem provável que tenhamos.",
+      icon: "casa",
+      lines: [
+        "Falta-lhe alguma coisa para acabar o trabalho?",
+        "Passe pela loja, é bem provável que tenhamos.",
+      ],
     },
     groups: [],
   },
@@ -434,7 +446,7 @@ const list = [
     lead: "Seja apicultor profissional ou esteja a começar, temos o material e os produtos para o trabalho no apiário, da colmeia à extração do mel.",
     topics: [
       {
-        icon: "🏠",
+        icon: "colmeia",
         title: "Colmeias",
         items: [
           "Colmeias e núcleos",
@@ -444,7 +456,7 @@ const list = [
         ],
       },
       {
-        icon: "🧑‍🌾",
+        icon: "protecao",
         title: "Proteção e ferramentas",
         items: [
           "Fatos e máscaras",
@@ -454,7 +466,7 @@ const list = [
         ],
       },
       {
-        icon: "🍯",
+        icon: "mel",
         title: "Alimentação e cuidados",
         items: [
           "Alimentação para abelhas",
@@ -483,8 +495,20 @@ export const categories = list.map((category) => ({
       ? photoOf(category.slug, category.intro.photo)
       : null,
   },
+  groups: category.groups?.map((group) => ({
+    ...group,
+    image: group.photo ? photoOf(category.slug, group.photo) : null,
+  })),
   topics: category.topics?.map((topic) => ({
-    ...topic,
+    ...drawn(topic),
     image: topic.photo ? photoOf(category.slug, topic.photo) : null,
   })),
+  tiles: category.tiles?.map(drawn),
+  highlights: category.highlights?.map(drawn),
+  split: category.split && {
+    ...category.split,
+    boxes: category.split.boxes.map(drawn),
+  },
+  note: drawn(category.note),
+  cta: drawn(category.cta),
 }));

@@ -20,7 +20,7 @@ export const routes = [
     path: "/parceiros",
     name: "partners",
     component: () => import("@/views/PartnersView.vue"),
-    meta: { label: "Parceiros" },
+    meta: { label: "Marcas" },
   },
   {
     path: "/contactos",
