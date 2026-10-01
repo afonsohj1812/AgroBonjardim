@@ -62,7 +62,7 @@ const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent("Agro Bonjard
 
 .map {
   width: 100%;
-  height: 24rem;
+  height: clamp(15rem, 45vw, 24rem);
   margin-top: 0;
   border: 0;
   border-radius: var(--radius);

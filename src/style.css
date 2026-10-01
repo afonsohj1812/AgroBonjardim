@@ -47,6 +47,10 @@ main {
 }
 
 @media (max-width: 720px) {
+  :root {
+    --header-height: 5rem;
+  }
+
   main {
     padding-top: var(--header-height);
   }

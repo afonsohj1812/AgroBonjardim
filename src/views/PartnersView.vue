@@ -33,10 +33,11 @@ import { partners, hero } from "@/data/partners";
 <style scoped>
 .hero {
   position: relative;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-panel);
   overflow: hidden;
   margin-bottom: 2rem;
   aspect-ratio: 16 / 5;
+  min-height: 9rem;
 }
 
 .hero img {
@@ -48,8 +49,8 @@ import { partners, hero } from "@/data/partners";
 
 .hero h1 {
   position: absolute;
-  left: 2rem;
-  bottom: 1.5rem;
+  left: clamp(1rem, 4vw, 2rem);
+  bottom: clamp(0.75rem, 3vw, 1.5rem);
   color: var(--white);
   font-size: clamp(2rem, 5vw, 3.5rem);
   margin: 0;
@@ -73,10 +74,22 @@ import { partners, hero } from "@/data/partners";
 .logos {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(9rem, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 3rem);
   margin-top: 2rem;
   padding: 0;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    aspect-ratio: 3 / 2;
+  }
 }
 
 </style>

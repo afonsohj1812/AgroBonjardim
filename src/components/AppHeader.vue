@@ -7,6 +7,7 @@ import { categories } from "@/data/products";
 import logo from "@/assets/logo.png";
 
 const open = ref(false);
+const submenu = ref(false);
 const route = useRoute();
 
 const centreRoutes = routes.filter((r) => r.name !== "contact");
@@ -14,8 +15,16 @@ const contactRoute = routes.find((r) => r.name === "contact");
 
 watch(
   () => route.path,
-  () => (open.value = false),
+  () => {
+    open.value = false;
+    submenu.value = false;
+  },
 );
+
+// Ao fechar o menu, as categorias voltam a ficar recolhidas.
+watch(open, (isOpen) => {
+  if (!isOpen) submenu.value = false;
+});
 
 const scrolled = ref(false);
 const onScroll = () => (scrolled.value = window.scrollY > 10);
@@ -28,7 +37,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 
 <template>
   <header class="header" :class="{ open }">
-    <div class="bar" :class="{ solid }">
+    <div class="bar" :class="{ solid: solid || open }">
       <RouterLink :to="{ name: 'home' }" class="logo">
         <img :src="logo" alt="AgroBonjardim" />
       </RouterLink>
@@ -55,7 +64,32 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
           >
             <RouterLink :to="{ name: r.name }">{{ r.meta.label }}</RouterLink>
 
-            <ul v-if="r.name === 'products'" class="dropdown">
+            <button
+              v-if="r.name === 'products'"
+              class="expand"
+              :class="{ open: submenu }"
+              :aria-expanded="submenu"
+              aria-label="Ver categorias"
+              @click="submenu = !submenu"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 9.5l6 6 6-6" />
+              </svg>
+            </button>
+
+            <ul
+              v-if="r.name === 'products'"
+              class="dropdown"
+              :class="{ open: submenu }"
+            >
               <li v-for="c in categories" :key="c.slug">
                 <RouterLink :to="{ name: 'category', params: { slug: c.slug } }">
                   {{ c.name }}
@@ -197,6 +231,29 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   align-items: center;
 }
 
+/* Só serve o menu de telemóvel; no ecrã grande a lista abre ao passar o rato. */
+.expand {
+  display: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.expand svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.25s ease;
+}
+
+.expand.open svg {
+  transform: rotate(180deg);
+}
+
 .item--menu > a::after {
   content: "";
   display: inline-block;
@@ -214,7 +271,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   transform: translateX(-50%);
   z-index: 20;
   display: none;
-  min-width: 16rem;
+  min-width: min(16rem, 90vw);
   padding: 0.5rem;
   list-style: none;
   background: var(--green-darker);
@@ -251,6 +308,10 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
     right: 0;
   }
 
+  .logo img {
+    height: 3.75rem;
+  }
+
   .bar {
     grid-template-columns: 1fr auto;
     height: auto;
@@ -260,6 +321,14 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
 
   .toggle {
     display: block;
+  }
+
+  /* Com o menu aberto, a barra tem de tapar a pagina por tras. */
+  .header.open .bar.solid {
+    background: rgba(15, 31, 0, 0.97);
+    max-height: calc(100vh - 1rem);
+    max-height: calc(100svh - 1rem);
+    overflow-y: auto;
   }
 
   .menu {
@@ -280,21 +349,32 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   }
 
   .item {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
   }
 
   .item--menu > a::after {
     display: none;
   }
 
+  .expand {
+    display: grid;
+  }
+
   .dropdown {
     position: static;
-    display: block;
+    display: none;
+    grid-column: 1 / -1;
+    min-width: 0;
     transform: none;
-    padding: 0 0 0 1rem;
+    padding: 0 0 0.5rem 1rem;
     background: transparent;
     box-shadow: none;
+  }
+
+  .dropdown.open {
+    display: block;
   }
 
   .dropdown a {

@@ -86,7 +86,7 @@ onUnmounted(() => clearInterval(timer));
 
       <div class="hero_content">
         <div class="hero_grid">
-          <h1>Tudo para a agricultura, a pecuária e o jardim</h1>
+          <h1>Tudo para a agricultura, pecuária e jardim</h1>
 
           <div class="hero_aside">
             <p>
@@ -250,6 +250,7 @@ onUnmounted(() => clearInterval(timer));
   flex-direction: column;
   justify-content: flex-end;
   min-height: 100vh;
+  min-height: 100svh;
   margin-inline: calc(-1 * var(--gutter));
   margin-top: calc(-1 * var(--header-height));
   padding: clamp(2rem, 5vw, 4.5rem);

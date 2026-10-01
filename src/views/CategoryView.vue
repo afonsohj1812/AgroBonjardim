@@ -875,6 +875,16 @@ h1 {
   }
 }
 
+@media (max-width: 440px) {
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .group ul.is-split {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   .group,
   .group--media {

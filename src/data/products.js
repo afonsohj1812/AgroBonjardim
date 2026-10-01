@@ -384,7 +384,7 @@ const list = [
           "Ferramentas manuais",
           "Chaves e alicates",
           "Fitas métricas e níveis",
-          "Escadotes",
+          "Escadas e escadotes",
         ],
       },
       {
