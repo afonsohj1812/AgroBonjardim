@@ -279,9 +279,13 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   box-shadow: var(--shadow);
 }
 
-.item--menu:hover .dropdown,
-.item--menu:focus-within .dropdown {
-  display: block;
+/* Só no ecrã grande: no telemóvel quem manda é o botão de expandir, e o foco
+   que fica no botão depois do toque manteria a lista aberta para sempre. */
+@media (min-width: 721px) {
+  .item--menu:hover .dropdown,
+  .item--menu:focus-within .dropdown {
+    display: block;
+  }
 }
 
 .dropdown a {
