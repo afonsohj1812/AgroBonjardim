@@ -1,0 +1,90 @@
+{
+  "hero": "partner.jpeg",
+  "partners": [
+    { "name": "Parceiro 1", "logo": "pecol.png", "link": "https://pecol.pt/" },
+    {
+      "name": "Parceiro 2",
+      "logo": "siro.png",
+      "link": "https://www.siro.pt/pt/programs/cindex.aspx"
+    },
+    { "name": "Parceiro 3", "logo": "ingco.png", "link": "https://ingco.pt/" },
+    {
+      "name": "Parceiro 4",
+      "logo": "like.jpg",
+      "link": "https://www.mobiserra.com/home/site.html"
+    },
+    {
+      "name": "Parceiro 5",
+      "logo": "zezere.png",
+      "link": "https://racoeszezere.com/"
+    },
+    {
+      "name": "Parceiro 6",
+      "logo": "canto.jpg",
+      "link": "https://adercereal.pt/canto-alegre/"
+    },
+    { "name": "Parceiro 7", "logo": "pet.png", "link": "https://www.petmaxi.pt/" },
+    {
+      "name": "Parceiro 8",
+      "logo": "fris.png",
+      "link": "https://www.purina.pt/marcas/friskies"
+    },
+    {
+      "name": "Parceiro 9",
+      "logo": "ivo.png",
+      "link": "https://www.ivocutelarias.com/"
+    },
+    {
+      "name": "Parceiro 10",
+      "logo": "silva.png",
+      "link": "https://jsilvamoreira.pt/"
+    },
+    {
+      "name": "Parceiro 11",
+      "logo": "WOKIN.webp",
+      "link": "https://www.wokintools.com/"
+    },
+    {
+      "name": "Parceiro 12",
+      "logo": "nutro.png",
+      "link": "https://nutrofertil.com/"
+    },
+    {
+      "name": "Parceiro 13",
+      "logo": "asc.webp",
+      "link": "https://ascenza.pt/pt-pt",
+      "scale": 1.35
+    },
+    {
+      "name": "Parceiro 14",
+      "logo": "promi.webp",
+      "link": "https://www.promisol.com/en"
+    },
+    {
+      "name": "Parceiro 15",
+      "logo": "bayer.svg",
+      "link": "https://www.cropscience.bayer.pt/produtos/protecao-das-culturas"
+    },
+    {
+      "name": "Parceiro 16",
+      "logo": "syn.webp",
+      "link": "https://www.syngenta.pt/"
+    },
+    {
+      "name": "Bellota",
+      "logo": "bellota.png",
+      "link": "https://www.bellota.com/pt-pt/"
+    },
+    {
+      "name": "IQV Agro",
+      "logo": "iqv.png",
+      "link": "https://iqvagro.com/pt-pt/"
+    },
+    {
+      "name": "ADP Fertilizantes",
+      "logo": "adp.png",
+      "link": "https://www.fertiberia.com/pt-pt/adp-fertilizantes/"
+    },
+    { "name": "Euro Sementes", "logo": "eurosementes.jpg" }
+  ]
+}
