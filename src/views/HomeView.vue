@@ -77,6 +77,7 @@ onUnmounted(() => clearInterval(timer));
         class="hero_video"
         :class="{ active: i === current }"
         :src="src"
+        poster="/hero-poster.png"
         :autoplay="i === 0"
         :preload="i === 0 ? 'auto' : 'metadata'"
         muted
