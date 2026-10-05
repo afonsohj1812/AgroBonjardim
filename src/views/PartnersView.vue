@@ -21,9 +21,18 @@ import { partners, hero } from "@/data/partners";
     <section class="panel">
       <ul class="logos">
         <li v-for="(partner, i) in partners" :key="i" class="logo-tile">
-          <a :href="partner.link" target="_blank" rel="noopener noreferrer">
-            <img :src="partner.logo" :alt="partner.name" />
-          </a>
+          <component
+            :is="partner.link ? 'a' : 'div'"
+            :href="partner.link"
+            :target="partner.link ? '_blank' : null"
+            :rel="partner.link ? 'noopener noreferrer' : null"
+          >
+            <img
+              :src="partner.logo"
+              :alt="partner.name"
+              :style="partner.scale ? { '--logo-scale': partner.scale } : null"
+            />
+          </component>
         </li>
       </ul>
     </section>

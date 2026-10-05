@@ -273,7 +273,7 @@ a.category:hover {
   box-shadow: var(--shadow);
 }
 
-.logo-tile a {
+.logo-tile > * {
   display: grid;
   place-items: center;
   width: 100%;
@@ -282,12 +282,14 @@ a.category:hover {
   transition: transform 0.25s ease;
 }
 
-.logo-tile a:hover {
+.logo-tile:hover > * {
   transform: scale(1.08);
 }
 
+/* Logotipos com muito espaco em branco pedem --logo-scale para compensar. */
 .logo-tile img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transform: scale(var(--logo-scale, 1));
 }

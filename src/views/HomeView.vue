@@ -145,9 +145,18 @@ onUnmounted(() => clearInterval(timer));
             class="logo-tile"
             :aria-hidden="i >= partners.length"
           >
-            <a :href="partner.link" target="_blank" rel="noopener noreferrer">
-              <img :src="partner.logo" :alt="partner.name" />
-            </a>
+            <component
+              :is="partner.link ? 'a' : 'div'"
+              :href="partner.link"
+              :target="partner.link ? '_blank' : null"
+              :rel="partner.link ? 'noopener noreferrer' : null"
+            >
+              <img
+                :src="partner.logo"
+                :alt="partner.name"
+                :style="partner.scale ? { '--logo-scale': partner.scale } : null"
+              />
+            </component>
           </li>
         </ul>
       </div>

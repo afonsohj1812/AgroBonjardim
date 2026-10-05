@@ -14,6 +14,10 @@ import asc from "@/assets/partners/asc.webp";
 import promi from "@/assets/partners/promi.webp";
 import bayer from "@/assets/partners/bayer.svg";
 import syn from "@/assets/partners/syn.webp";
+import bellota from "@/assets/partners/bellota.png";
+import iqv from "@/assets/partners/iqv.png";
+import adp from "@/assets/partners/adp.png";
+import eurosementes from "@/assets/partners/eurosementes.jpg";
 
 export { default as hero } from "@/assets/partners/partner.jpeg";
 
@@ -46,7 +50,12 @@ export const partners = [
   { name: "Parceiro 10", logo: silva, link: "https://jsilvamoreira.pt/" },
   { name: "Parceiro 11", logo: wokin, link: "https://www.wokintools.com/" },
   { name: "Parceiro 12", logo: nutro, link: "https://nutrofertil.com/" },
-  { name: "Parceiro 13", logo: asc, link: "https://ascenza.pt/pt-pt" },
+  {
+    name: "Parceiro 13",
+    logo: asc,
+    link: "https://ascenza.pt/pt-pt",
+    scale: 1.35,
+  },
   { name: "Parceiro 14", logo: promi, link: "https://www.promisol.com/en" },
   {
     name: "Parceiro 15",
@@ -54,4 +63,12 @@ export const partners = [
     link: "https://www.cropscience.bayer.pt/produtos/protecao-das-culturas",
   },
   { name: "Parceiro 16", logo: syn, link: "https://www.syngenta.pt/" },
+  { name: "Bellota", logo: bellota, link: "https://www.bellota.com/pt-pt/" },
+  { name: "IQV Agro", logo: iqv, link: "https://iqvagro.com/pt-pt/" },
+  {
+    name: "ADP Fertilizantes",
+    logo: adp,
+    link: "https://www.fertiberia.com/pt-pt/adp-fertilizantes/",
+  },
+  { name: "Euro Sementes", logo: eurosementes },
 ];
