@@ -8,6 +8,8 @@ import logo from "@/assets/logo.png";
 
 const open = ref(false);
 const submenu = ref(false);
+// Fecha a lista do rato depois de navegar, ate o ponteiro sair do menu.
+const hushed = ref(false);
 const route = useRoute();
 
 const centreRoutes = routes.filter((r) => r.name !== "contact");
@@ -18,6 +20,8 @@ watch(
   () => {
     open.value = false;
     submenu.value = false;
+    hushed.value = true;
+    document.activeElement?.blur();
   },
 );
 
@@ -60,7 +64,8 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
             v-for="r in centreRoutes"
             :key="r.name"
             class="item"
-            :class="{ 'item--menu': r.name === 'products' }"
+            :class="{ 'item--menu': r.name === 'products', hushed }"
+            @mouseleave="hushed = false"
           >
             <RouterLink :to="{ name: r.name }">{{ r.meta.label }}</RouterLink>
 
@@ -285,6 +290,11 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll));
   .item--menu:hover .dropdown,
   .item--menu:focus-within .dropdown {
     display: block;
+  }
+
+  /* Vem depois, por isso ganha às duas regras acima. */
+  .item--menu.hushed .dropdown {
+    display: none;
   }
 }
 
